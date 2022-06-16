@@ -6,27 +6,31 @@ Le travail est principalement réalisé sous le financement de [l'Agence França
 
 Le modèle bénéficie d'avancées et matériels acquis grâce au projet [PEPPER](https://anrpepper.github.io/) financé par l'[Agence National de la Recherche](http://www.agence-nationale-recherche.fr/en/).
 
-# Visualisation des prévisions du modèle
+## Visualisation des prévisions du modèle
 
-Sous ce [lien](https://pioucyril.github.io/mppcpro/prevision) vous pouvez voir l'actuel prévision du modèle. 
+Sous ce [lien](https://pioucyril.github.io/mppcpro/forecast.html) vous pouvez voir l'actuel prévision du modèle. 
 
-Les geotiffs à 1km de résolution sont téléchargeables sur (lien à venir).
+Les geotiffs à 1km de résolution sont téléchargeables [ici](https://pioucyril.github.io/mppcpro/img).
 
-# Développement du modèle
+## Utilisation du modèle
 
-## Introduction
+(Lecture des cartes, Précautions à prendre...)
+
+## Développement du modèle
+
+### Introduction
 
 (l'objectif du modèle.... et les étapes du code...)
 
-## Etapes de préparation des données
+### Etapes de préparation des données
 
 (description de toutes les étapes de préparation des données)
 
-## Approche statistique utilisée
+### Approche statistique utilisée
 
 (Explication des algorithmes utilisés pour l'ajustement du modèle statistique)
 
-## Création des prévisions
+### Création des prévisions
 
 (explication des étapes pour la préparation des cartes de prévisions)
 
