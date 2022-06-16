@@ -1,10 +1,6 @@
-# Bienvenue sur le site de MPPCPRO
+# Bienvenue sur le site du MPPCPRO
 
-Ce modèle est développé par [l'équipe criquet](https://locustcirad.wordpress.com/) du [CBGP](https://www6.montpellier.inrae.fr/cbgp) au [Cirad](https://www.cirad.fr/).
-
-Le travail est principalement réalisé sous le financement de [l'Agence Française pour le Développement](https://www.afd.fr/fr) au travers d'une convention avec la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/) dans le cadre du projet "Consolider les bases de la stratégie de lutte préventive et développer la recherche opérationnelle sur le Criquet pèlerin dans la Région Occidentale" ([voir ici](https://www.fao.org/clcpro/nouvelles/detail/fr/c/1505612/)).
-
-Le modèle bénéficie d'avancées et matériels acquis grâce au projet [PEPPER](https://anrpepper.github.io/) financé par l'[Agence National de la Recherche](http://www.agence-nationale-recherche.fr/en/).
+Le Modèle de Prévision de Présence de Criquet Pèlerin en Région Occidentale (MPPCPRO) est développé par [l'équipe criquet](https://locustcirad.wordpress.com/) du [CBGP](https://www6.montpellier.inrae.fr/cbgp) au [Cirad](https://www.cirad.fr/) pour la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/).
 
 ## Visualisation des prévisions du modèle
 
@@ -50,4 +46,10 @@ Lorsque vous décidez d'envoyer une équipe de terrain dans un secteur de votre 
 
 (explication des étapes pour la préparation des cartes de prévisions)
 
+
+## Financements
+
+Le travail est principalement réalisé sous le financement de [l'Agence Française pour le Développement](https://www.afd.fr/fr) au travers d'une convention avec la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/) dans le cadre du projet "Consolider les bases de la stratégie de lutte préventive et développer la recherche opérationnelle sur le Criquet pèlerin dans la Région Occidentale" ([voir ici](https://www.fao.org/clcpro/nouvelles/detail/fr/c/1505612/)).
+
+Le modèle bénéficie d'avancées et matériels acquis grâce au projet [PEPPER](https://anrpepper.github.io/) financé par l'[Agence National de la Recherche](http://www.agence-nationale-recherche.fr/en/) et des avancées sur la télédétection de l'humidité du sol des projets [SMELLS](http://smells.isardsat.com/) financé par l'[ESA](https://www.esa.int/) et [ACCWA](https://accwa.isardsat.space/) financé par l'[Union Européenne](https://marie-sklodowska-curie-actions.ec.europa.eu/).
 

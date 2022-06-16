@@ -71,7 +71,7 @@ addCircleMarkers(data=df[df$AbsSolTrans>0,], lng = ~Longitude, lat = ~Latitude, 
 addLegend(pal = pal2, values = seq(50,100,by=5), title = "Probability (in %) to observe Locusts")
 m=addRasterImage(m,r2, colors=pal2, opacity = 0.75,group="2017-10-01")
 m=addRasterImage(m,r2b, colors=pal2, opacity = 0.75,group="2016-10-01")
-#m=hideGroup(m,"2017-10-01")
+m=hideGroup(m,"2017-10-01")
 m = addMarkers(m, dfs$Long, dfs$Lat, label = dfs$Name,group="UNLAs")
 m=addLayersControl(m,
    baseGroups = c("Mapbox light","Mapbox satellite","Mapbox outdoor","Mapbox dark","OSM"),
