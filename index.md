@@ -1,39 +1,33 @@
-## Bienvenu sur le site de MPPCPRO
+# Bienvenue sur le site de MPPCPRO
 
 Ce modèle est développé par [l'équipe criquet](https://locustcirad.wordpress.com/) du [CBGP](https://www6.montpellier.inrae.fr/cbgp) au [Cirad](https://www.cirad.fr/).
 
-Le travail est principalement réalisé sous le financement de [l'Agence Française pour le Développement](https://www.afd.fr/fr) au travers d'une convention avec la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/) dans le cadre du projet [Consolider les bases de la stratégie de lutte préventive et développer la recherche opérationnelle sur le Criquet pèlerin dans la Région Occidentale] (https://www.fao.org/clcpro/nouvelles/detail/fr/c/1505612/).
+Le travail est principalement réalisé sous le financement de [l'Agence Française pour le Développement](https://www.afd.fr/fr) au travers d'une convention avec la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/) dans le cadre du projet "Consolider les bases de la stratégie de lutte préventive et développer la recherche opérationnelle sur le Criquet pèlerin dans la Région Occidentale" ([voir ici](https://www.fao.org/clcpro/nouvelles/detail/fr/c/1505612/)).
 
 Le modèle bénéficie d'avancées et matériels acquis grâce au projet [PEPPER](https://anrpepper.github.io/) financé par l'[Agence National de la Recherche](http://www.agence-nationale-recherche.fr/en/).
 
-### Markdown
+# Visualisation des prévisions du modèle
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Sous ce [lien](https://pioucyril.github.io/mppcpro/prevision) vous pouvez voir l'actuel prévision du modèle. 
 
-```markdown
-Syntax highlighted code block
+Les geotiffs à 1km de résolution sont téléchargeables sur (lien à venir).
 
-# Header 1
-## Header 2
-### Header 3
+# Développement du modèle
 
-- Bulleted
-- List
+## Introduction
 
-1. Numbered
-2. List
+(l'objectif du modèle.... et les étapes du code...)
 
-**Bold** and _Italic_ and `Code` text
+## Etapes de préparation des données
 
-[Link](url) and ![Image](src)
-```
+(description de toutes les étapes de préparation des données)
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+## Approche statistique utilisée
 
-### Jekyll Themes
+(Explication des algorithmes utilisés pour l'ajustement du modèle statistique)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pioucyril/mppcpro/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Création des prévisions
 
-### Support or Contact
+(explication des étapes pour la préparation des cartes de prévisions)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+
