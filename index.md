@@ -1,8 +1,10 @@
-## Welcome to GitHub Pages
+## Bienvenu sur le site de MPPCPRO
 
-You can use the [editor on GitHub](https://github.com/pioucyril/mppcpro/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Ce modèle est développé par [l'équipe criquet](https://locustcirad.wordpress.com/) du [CBGP](https://www6.montpellier.inrae.fr/cbgp) au [Cirad](https://www.cirad.fr/).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Le travail est principalement réalisé sous le financement de [l'Agence Française pour le Développement](https://www.afd.fr/fr) au travers d'une convention avec la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/) dans le cadre du projet [Consolider les bases de la stratégie de lutte préventive et développer la recherche opérationnelle sur le Criquet pèlerin dans la Région Occidentale] (https://www.fao.org/clcpro/nouvelles/detail/fr/c/1505612/).
+
+Le modèle bénéficie d'avancées et matériels acquis grâce au projet [PEPPER](https://anrpepper.github.io/) financé par l'[Agence National de la Recherche](http://www.agence-nationale-recherche.fr/en/).
 
 ### Markdown
 
