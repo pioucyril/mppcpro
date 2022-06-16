@@ -10,7 +10,7 @@ Le modèle bénéficie d'avancées et matériels acquis grâce au projet [PEPPER
 
 Sous ce [lien](https://pioucyril.github.io/mppcpro/forecast.html) vous pouvez voir l'actuel prévision du modèle. 
 
-Les geotiffs à 1km de résolution sont téléchargeables [ici](https://pioucyril.github.io/mppcpro/img).
+Les geotiffs à 1km de résolution sont téléchargeables [ici](https://github.com/pioucyril/mppcpro/tree/main/img).
 
 ## Utilisation du modèle
 
