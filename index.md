@@ -1,4 +1,4 @@
-# Bienvenue sur le site du MPPCPRO
+﻿# Bienvenue sur le site du MPPCPRO
 
 Le Modèle de Prévision de Présence de Criquet Pèlerin en Région Occidentale (MPPCPRO) est développé par [l'équipe criquet](https://locustcirad.wordpress.com/) du [CBGP](https://www6.montpellier.inrae.fr/cbgp) au [Cirad](https://www.cirad.fr/) pour la [FAO-CLCPRO](https://www.fao.org/clcpro/fr/).
 
@@ -16,13 +16,13 @@ Les cartes interactives sur le [site](https://pioucyril.github.io/mppcpro/foreca
 
 Vous pouvez zoomer, vous déplacer et visualiser les valeurs qui sont présentées avec différentes couleurs: du vert au rouge équivalent à une gamme de probabilité de présence de 0.5 à 1.0 (ou 50% à 100%). Les zones où la probabilité de présence est inférieure à 0.5 ne sont pas colorées (carte transparente).
 
-Vous pouvez changer le fond de carte (5 modalités dans la légende à droite), pour faciliter votre visualisation selon vos gouts (fond noir = Mapbox dark, fond clair = Mapbox light, imagerie satelitaire en couleurs naturelles = Mapbox satellite, informations de reliefs et zones d'exceptions= Mapbox outdoor, informations Open Street Map classiques = OSM).
+Vous pouvez changer le fond de carte (5 modalités dans la légende à droite), pour faciliter votre visualisation selon vos gouts (fond noir = Mapbox dark, fond clair = Mapbox light, imagerie satellitaire en couleurs naturelles = Mapbox satellite, informations de reliefs et zones d'exceptions= Mapbox outdoor, informations Open Street Map classiques = OSM).
 
 Les boutons + et - en haut à gauche permettent de zoomer ou dézoomer (en plus de l'usage classique de votre interface (écran tactile ou souris)). Le bouton présentant un petit monde dessous permet de revenir au zoom original.
 
 ### Précautions à prendre
 
-Lorsque vous visualisez une date de prévision, faites bien attention à ne pas sélectionner plusieurs dates (à droite): cela risque de vous donner une sur-évaluation.
+Lorsque vous visualisez une date de prévision, faites bien attention à ne pas sélectionner plusieurs dates (à droite): cela risque de vous donner une surévaluation.
 
 Les sorties du modèle ne sont pas parfaites à 100%. Nous estimons que le taux d'erreur est environ 25%, c'est à dire qu'un site avec une probabilité < 0.5 (sans couleur), peut avoir des criquets avec une chance sur 4. Identiquement, un site noté avec une probabilité > 0.5 (couleurs vert à jaune), peut ne pas avoir de criquets avec une chance sur 4. Nous espérons qu'avec l'amélioration des algorithmes et des précisions des données collectées sur le terrain, nous arriverons à réduire ces taux d'erreurs dans des versions à venir du modèle.
 
@@ -32,7 +32,16 @@ Lorsque vous décidez d'envoyer une équipe de terrain dans un secteur de votre 
 
 ### Introduction
 
-(l'objectif du modèle.... et les étapes du code...)
+L'objectif du modèle est de fournir des cartes tous les 10 jours à une résolution de 1km des zones propices aux développement de populations du criquet pèlerin afin d'orienter les équipes de prospections dans le cadre de la gestion préventive. Les cartes doivent indiquer la probabilité de présence de criquet en fonction de certaines variables environnementales (végétation, température et humidité). L'idéal serait d'avoir ces probabilités de présence pour les 30 jours à venir et de pouvoir différencier les probabilités de présence des solitaires et des grégaires.
+
+Il y a 9 grandes étapes dans la préparation (le code R) du modèle:
+ 1. Le téléchargement des données acridiennes
+ 2. La préparation et le filtrage des données pour avoir une base d'observations sur la CLCPRO entre 2000 et 2020 hors périodes d’invasion et en excluant les essaims
+ 3. Le téléchargement des données satellitaires comme indicatrices des variables environnementales 
+ 4. La création d’une grille de référence (1km de résolution sur l’ensemble de la CLCPRO)
+ 5. La standardisation des données satellitaires sur la grille de référence
+ 6. L’agrégation des données acridiennes sur la grille de référence et par périodes de 10j (3 décades/mois)
+ 7. 
 
 ### Etapes de préparation des données
 
