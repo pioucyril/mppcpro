@@ -18,10 +18,10 @@ fb$month<-month( fb$date)
 fb$year<-year(fb$date)
 fb$day<-as.numeric(format(fb$date, "%d"))
 
-df<- fb[fb$day > 20 & fb$day < 31 & fb$month == 10 & fb$year == 2020,]
-name1="2020-10-21"
-namec1="20201021"
-name2=paste(name1,"gregarious")
+df<- fb[fb$day > 0 & fb$day < 11 & fb$month == 10 & fb$year == 2020,]
+name1="2020-11-01"
+namec1="20201101"
+name2=paste(name1,"Transiens")
 
 r2 <- raster(paste0("D:/Mes Donnees/GitHub/LocustForecastCLCPRO3/OUTPUTmachine_learning/ForecastMaps/meanpred",name1,".tif"))
 r2g <- raster(paste0("D:/Mes Donnees/GitHub/LocustForecastCLCPRO3/OUTPUTmachine_learning/ForecastMaps/meanpredgreg",name1,".tif"))
@@ -81,7 +81,7 @@ addCircleMarkers(data=df[df$AbsSolTrans==0,], lng = ~Longitude, lat = ~Latitude,
 addCircleMarkers(data=df[df$AbsSolTrans==1,], lng = ~Longitude, lat = ~Latitude, radius =5,col='#2ca25f',group="realData") %>%
 addCircleMarkers(data=df[df$AbsSolTrans==2,], lng = ~Longitude, lat = ~Latitude, radius =5,col='#e34a33',group="realData") %>%
 addLegend(pal = palSol, values = seq(50,100,by=5), title = "Probability (in %) to observe Locusts") %>%
-addLegend(pal = palGreg, values = seq(50,100,by=5), title = "Probability (in %) to observe Gregarious")
+addLegend(pal = palGreg, values = seq(50,100,by=5), title = "Probability (in %) to observe Transiens")
 m=addRasterImage(m,r2, colors=palSol, opacity = 0.75,group=name1)
 m=addRasterImage(m,r2g, colors=palGreg, opacity = 0.75,group=name2)
 m=hideGroup(m,name2)
