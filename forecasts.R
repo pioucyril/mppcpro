@@ -13,7 +13,7 @@ library(lubridate)
 library(viridis)
 path="D:/Mes Donnees/GitHub/LocustForecastCLCPRO3/"
 startdate="2023-06-01"
-howmanydecades=4
+howmanydecades=5
 gregariousmodel=FALSE
 fieldData=FALSE
 
