@@ -11,15 +11,16 @@ library(leaflet)
 library(raster)
 library(lubridate)
 library(viridis)
-path="D:/Mes Donnees/GitHub/LocustForecastCLCPRO3/"
+
+path_clcpro="/data/Production/StaticData/CLCPRO.RData"
+path_forecast="/data/Production/Forecasts"
 startdate="2023-06-01"
-howmanydecades=7
+howmanydecades=14
 gregariousmodel=FALSE
 fieldData=FALSE
 
-path_forecast=paste0(path,"/OUTPUTmachine_learning/RFfit2onFullData2010_2020")
-load(paste0(path,"/LOCUSTdata/CLCPRO.RData"))
-load(paste0(path,"/LOCUSTdata/clcproBase.RData"))
+load(path_clcpro)
+#load(paste0(path_locust,"/LOCUSTdata/clcproBase.RData"))
 
 ### Prepare the names of the files/dates to use in the interface:
 strc=strsplit(startdate,"-")
@@ -95,7 +96,7 @@ if(gregariousmodel){
 i = 1
 for(name in namesall){
   short=paste0(strsplit(name,"-")[[1]],collapse="")
-  r1 <- raster(paste0(path_forecast,"/PresAbs/meanpred",name,".tif"))
+  r1 <- raster(paste0(path_forecast,"/PresAbs/",short,"_F1/Ensemble/meanpred_",short,"_F1.tif"))
   rtrans=round(r1*100)
   rtrans=rtrans*(r1>0.5)
   values(rtrans)[values(rtrans)==0]<-NA
@@ -150,4 +151,3 @@ m = addScaleBar(m, position = "bottomleft", options = scaleBarOptions(imperial=F
 #save leaflet into html
 saveWidget(m, file="forecast.html")  
 
-      
