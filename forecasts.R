@@ -11,11 +11,14 @@ library(leaflet)
 library(raster)
 library(lubridate)
 library(viridis)
+source("function.R") # decade.toCome()
 
 path_clcpro="/data/Production/StaticData/CLCPRO.RData"
 path_forecast="/data/Production/Forecasts"
-startdate="2023-06-01"
-howmanydecades=14
+today=Sys.Date()
+startdate=decade.toCome(today)
+howmanydecadesBef=3
+howmanydecadesAft=2
 gregariousmodel=FALSE
 fieldData=FALSE
 
@@ -23,17 +26,17 @@ load(path_clcpro)
 #load(paste0(path_locust,"/LOCUSTdata/clcproBase.RData"))
 
 ### Prepare the names of the files/dates to use in the interface:
-strc=strsplit(startdate,"-")
+strc=strsplit(as.character(startdate),"-")
 year=strc[[1]][1]
 month=strc[[1]][2]
 day=strc[[1]][3]
 
-namesall = startdate
+namesall = as.character(startdate)
 if(gregariousmodel){
   namesallgreg=paste(startdate,"Transiens")
 }
-if(howmanydecades>1){
-  for(i in 2:howmanydecades){
+if(howmanydecadesAft>1){
+  for(i in 1:howmanydecadesAft){
     day=as.numeric(day)+10
     if(day>21){
       day="01"
@@ -47,6 +50,28 @@ if(howmanydecades>1){
     namesall=c(namesall,newdate)
     if(gregariousmodel){
       namesallgreg=c(namesallgreg,paste(newdate,"Transiens"))
+    }
+  }
+}
+# past decades
+year=strc[[1]][1]
+month=strc[[1]][2]
+day=strc[[1]][3]
+if(howmanydecadesBef>1){
+  for(i in 1:howmanydecadesBef){
+    day=as.numeric(day)-10
+    if(day<0){
+      day="21"
+      month=as.numeric(month)-1
+      if(month<0){
+        month="12"
+        year=as.numeric(year)-1
+      }
+    }
+    newdate=as.character(as.Date(paste(year,month,day,sep="-")))
+    namesall=c(newdate,namesall)
+    if(gregariousmodel){
+      namesallgreg=c(paste(newdate,"Transiens"),namesallgreg)
     }
   }
 }
@@ -94,27 +119,27 @@ if(gregariousmodel){
 
 ### Add rasters of forecast
 i = 1
+modV = 1
 for(name in namesall){
   short=paste0(strsplit(name,"-")[[1]],collapse="")
-  r1 <- raster(paste0(path_forecast,"/PresAbs/",short,"_F1/Ensemble/meanpred_",short,"_F1.tif"))
+  modV=ifelse(i<=howmanydecadesBef+1,modV,modV + 1)
+  r1 <- raster(paste0(path_forecast,"/PresAbs/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
   rtrans=round(r1*100)
   rtrans=rtrans*(r1>0.5)
   values(rtrans)[values(rtrans)==0]<-NA
+  
   if(gregariousmodel){
-    r1g <- raster(paste0(path_forecast,"/Greg/meanpredgreg",namesallgreg[i],".tif"))
+    r1g <- raster(paste0(path_forecast,"/Greg/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
     rtrg=round(r1g*100)*(r1>0.5)*(r1g>0.5)
     values(rtrg)[values(rtrg)==0]<-NA
     writeRaster(rtrg,paste0("img/",short,"g.tif"),overwrite=T)
     r1g <- raster(paste0("img/",short,"g.tif")) 
-  }
-  writeRaster(rtrans,paste0("img/",short,".tif"),overwrite=T)
-  r1 <- raster(paste0("img/",short,".tif"))
-  i = i + 1
-  m=addRasterImage(m,r1, colors=palPres, opacity = 0.75,group=name)
-  if(gregariousmodel){
     m=addRasterImage(m,r1g, colors=palGreg, opacity = 0.75,group=namesallgreg[i])
-  }
-  #m=hideGroup(m,name) #should we hide some at beginning?
+  }  
+  writeRaster(rtrans,paste0("img/",short,".tif"),overwrite=T)
+  r1 <- raster(paste0("img/",short,".tif")) 
+  m=addRasterImage(m,r1, colors=palPres, opacity = 0.75,group=name)
+  i = i + 1
 }
 
 
@@ -143,6 +168,14 @@ m=addLayersControl(m,
    overlayGroups = overlayg,
    options = layersControlOptions(collapsed = FALSE)
 )
+for(j in c(1:howmanydecadesBef,(howmanydecadesBef+2):(howmanydecadesBef+1+howmanydecadesAft))){
+  m=hideGroup(m,namesall[j])
+}
+if(gregariousmodel){
+  for(j in c(1:howmanydecadesBef,(howmanydecadesBef+2):(howmanydecadesBef+1+howmanydecadesAft))){
+    m=hideGroup(m,namesallgreg[j])
+  }
+}
 m=addMiniMap(m,toggleDisplay = TRUE)
 m = addEasyButton(m, easyButton(icon="fa-globe", title="Reset Zoom", 
      onClick=JS("function(btn, map){ map.setView([22,5],5);}")))
