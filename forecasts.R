@@ -184,3 +184,4 @@ m = addScaleBar(m, position = "bottomleft", options = scaleBarOptions(imperial=F
 #save leaflet into html
 saveWidget(m, file="forecast.html")  
 
+quit(status = 0)
