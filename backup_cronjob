@@ -1,9 +1,9 @@
-
-## --- Create html page containing forecast maps ---
+## --- Create html page containing forecast maps and push to github ---
 
 # Run on last day of previous decade
 */15 11-18 10,20 * * /home/elfernandez/Production/mppcpro/html_cron.sh >> /data/Production/Logs/html_$($TODAY --date=tomorrow).txt 2>&1
+0 11-18 10,20 * * /home/elfernandez/Production/mppcpro/github_cron.sh >> /data/Production/Logs/github_$($TODAY --date=tomorrow).txt 2>&1
 # Special case to find last day of month (to run the forecast for first decade of month)
 */15 11-18 28,31 * * [ $(date -d tomorrow +\%d) -eq 1 ] && /home/elfernandez/Production/mppcpro/html_cron.sh >> /data/Production/Logs/html_$($TODAY --date=tomorrow).txt 2>&1
-
+0 11-18 28,31 * * [ $(date -d tomorrow +\%d) -eq 1 ] && /home/elfernandez/Production/mppcpro/github_cron.sh >> /data/Production/Logs/github_$($TODAY --date=tomorrow).txt 2>&1
 
