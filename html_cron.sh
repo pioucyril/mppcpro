@@ -40,11 +40,11 @@ forecast_flag_ok=$flagdir/${decade:0:4}/${decade:4:2}/forecast_${decade}_OK
 cd $scriptdir
 
 # Launch R code
-R CMD BATCH forecasts.R
+R CMD BATCH --vanilla forecasts.R
 [[ ! $? -eq 0 ]] && echo "$(date) - Creation of html failed - Exit" && exit 1
 
 echo "Creation of html successful"
 # Add Rout file to logs
-cat "$scriptdir/forecasts.Rout" >> "$logdir/html_${decade}.log"
+mv "$scriptdir/forecasts.Rout" "$logdir/html_Rout_${decade}.txt"
 touch $html_flag_ok
 
