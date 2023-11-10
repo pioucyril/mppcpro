@@ -77,9 +77,9 @@ if(howmanydecadesBef>1){
 }
 
 ### prepare leaflet infos
-palPres <- leaflet::colorBin(palette = viridis(11),
-                          bins = 11,
-                          domain = seq(50,100,by=5),
+palPres <- leaflet::colorBin(palette = viridis(6),
+                          bins = 6,
+                          domain = seq(50,100,by=10),
                           na.color ="transparent")
 palGreg<-  colorNumeric(c('#FFAC1C','#C70039','#581845'), seq(50,100,by=5), na.color = "transparent")
 #palGreg <- leaflet::colorBin(palette = magma(11),
@@ -135,7 +135,10 @@ for(name in namesall){
     writeRaster(rtrg,paste0("img/",short,"g.tif"),overwrite=T)
     r1g <- raster(paste0("img/",short,"g.tif")) 
     m=addRasterImage(m,r1g, colors=palGreg, opacity = 0.75,group=namesallgreg[i])
-  }  
+  }
+  # Add RGB colors to geotiff
+  #colortable(rtrans) = c("white",rainbow(20)[1:10],"white")
+  colortable(rtrans) = viridis(6)
   writeRaster(rtrans,paste0("img/",short,".tif"),overwrite=T)
   r1 <- raster(paste0("img/",short,".tif")) 
   m=addRasterImage(m,r1, colors=palPres, opacity = 0.75,group=name)
