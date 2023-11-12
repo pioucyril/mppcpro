@@ -2,13 +2,14 @@
 #  MPPCPRO file example                                                  #
 #  to get the outputs of the model into an HTML using leaflet            #
 #                                                                        #
-#  Cyril Piou    & Lucile Marescot                                       # 
-#                  June 2023                                             # 
+#  Cyril Piou, Lucile Marescot, Elodie Fernandez                         # 
+#                  November 2023                                         # 
 ##########################################################################
 
 library(htmlwidgets)
 library(leaflet)
 library(raster)
+library(terra) #to be able to save with color table
 library(lubridate)
 library(viridis)
 source("function.R") # decade.toCome()
@@ -77,8 +78,8 @@ if(howmanydecadesBef>1){
 }
 
 ### prepare leaflet infos
-palPres <- leaflet::colorBin(palette = viridis(6),
-                          bins = 6,
+palPres <- leaflet::colorBin(palette = viridis(5),
+                          bins = 5,
                           domain = seq(50,100,by=10),
                           na.color ="transparent")
 palGreg<-  colorNumeric(c('#FFAC1C','#C70039','#581845'), seq(50,100,by=5), na.color = "transparent")
@@ -112,9 +113,9 @@ addTiles(urlTemplate=googleSat,attribution = mbAttr,group="Satellite") %>%
 addTiles(attribution = mbAttr,group = "OSM") %>%
 addPolygons(data=clcpro,fillColor = "#ffffff",fillOpacity=0.1,group ="CLCPRO") %>%
 setView(5,22,zoom=5) %>%
-addLegend(pal = palPres, values = seq(50,100,by=5), title = "Probability (in %) to observe Locusts")
+addLegend(pal = palPres, values = seq(50,100,by=10), title = "Probability (in %) to observe Locusts")
 if(gregariousmodel){
-  m = addLegend(m, pal = palGreg, values = seq(50,100,by=5), title = "Probability (in %) to observe Transiens")
+  m = addLegend(m, pal = palGreg, values = seq(50,100,by=10), title = "Probability (in %) to observe Transiens")
 }
 
 ### Add rasters of forecast
@@ -123,25 +124,24 @@ modV = 1
 for(name in namesall){
   short=paste0(strsplit(name,"-")[[1]],collapse="")
   modV=ifelse(i<=howmanydecadesBef+1,modV,modV + 1)
-  r1 <- raster(paste0(path_forecast,"/PresAbs/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
+  r1 <- rast(paste0(path_forecast,"/PresAbs/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
   rtrans=round(r1*100)
-  rtrans=rtrans*(r1>0.5)
+  rtrans=rtrans*(r1>=0.5)
   values(rtrans)[values(rtrans)==0]<-NA
   
   if(gregariousmodel){
-    r1g <- raster(paste0(path_forecast,"/Greg/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
-    rtrg=round(r1g*100)*(r1>0.5)*(r1g>0.5)
+    r1g <- rast(paste0(path_forecast,"/Greg/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
+    rtrg=round(r1g*100)*(r1>=0.5)*(r1g>=0.5)
     values(rtrg)[values(rtrg)==0]<-NA
     writeRaster(rtrg,paste0("img/",short,"g.tif"),overwrite=T)
-    r1g <- raster(paste0("img/",short,"g.tif")) 
-    m=addRasterImage(m,r1g, colors=palGreg, opacity = 0.75,group=namesallgreg[i])
+    r2g <- raster(paste0("img/",short,"g.tif")) 
+    m=addRasterImage(m,r2g, colors=palGreg, opacity = 0.75,group=namesallgreg[i])
   }
   # Add RGB colors to geotiff
-  #colortable(rtrans) = c("white",rainbow(20)[1:10],"white")
-  colortable(rtrans) = viridis(6)
+  coltab(rtrans) <- c(rep(NA,50),rep(viridis(5),each=10),viridis(5)[5],rep(NA,155))
   writeRaster(rtrans,paste0("img/",short,".tif"),overwrite=T)
-  r1 <- raster(paste0("img/",short,".tif")) 
-  m=addRasterImage(m,r1, colors=palPres, opacity = 0.75,group=name)
+  r2 <- raster(paste0("img/",short,".tif")) 
+  m=addRasterImage(m,r2, colors=palPres, opacity = 0.75,group=name)
   i = i + 1
 }
 
