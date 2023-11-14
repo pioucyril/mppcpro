@@ -135,13 +135,13 @@ for(name in namesall){
     values(rtrg)[values(rtrg)==0]<-NA
     writeRaster(rtrg,paste0("img/",short,"g.tif"),overwrite=T)
     r2g <- raster(paste0("img/",short,"g.tif")) 
-    m=addRasterImage(m,r2g, colors=palGreg, opacity = 0.75,group=namesallgreg[i])
+    m=addRasterImage(m,r2g, colors=palGreg, opacity = 0.75,group=namesallgreg[i],method='ngb')
   }
   # Add RGB colors to geotiff
   coltab(rtrans) <- c(rep(NA,50),rep(viridis(5),each=10),viridis(5)[5],rep(NA,155))
   writeRaster(rtrans,paste0("img/",short,".tif"),overwrite=T)
   r2 <- raster(paste0("img/",short,".tif")) 
-  m=addRasterImage(m,r2, colors=palPres, opacity = 0.75,group=name)
+  m=addRasterImage(m,r2, colors=palPres, opacity = 0.75,group=name,method='ngb')
   i = i + 1
 }
 
