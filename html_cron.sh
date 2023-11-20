@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 
 #--------------------------------------------------------
 #
@@ -26,6 +26,8 @@ elif [ $day -eq 20 ]; then
 else
   decade=$(date -d "${yyyymm}${day} + 1 day" +%Y%m%d)
 fi
+
+which R
 
 # Check if html already done
 html_flag_ok=$flagdir/${decade:0:4}/${decade:4:2}/html_${decade}_OK

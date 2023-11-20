@@ -6,6 +6,8 @@
 #                  November 2023                                         # 
 ##########################################################################
 
+.libPaths("/home/pioucy/R/x86_64-pc-linux-gnu-library/4.1")
+
 library(htmlwidgets)
 library(leaflet)
 library(raster)
