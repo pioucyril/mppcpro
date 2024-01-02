@@ -49,7 +49,7 @@ if(howmanydecadesAft>1){
         year=as.numeric(year)+1
       }
     }
-    newdate=as.character(as.Date(paste(year,month,day,sep="-")))
+    newdate=as.character(as.Date(paste(year,month,day,sep="-"), "%Y-%m-%d"))
     namesall=c(namesall,newdate)
     if(gregariousmodel){
       namesallgreg=c(namesallgreg,paste(newdate,"Transiens"))
@@ -66,18 +66,20 @@ if(howmanydecadesBef>1){
     if(day<0){
       day="21"
       month=as.numeric(month)-1
-      if(month<0){
+      if(month<=0){
         month="12"
         year=as.numeric(year)-1
       }
     }
-    newdate=as.character(as.Date(paste(year,month,day,sep="-")))
+    newdate=as.character(as.Date(paste(year,month,day,sep="-"), "%Y-%m-%d"))
     namesall=c(newdate,namesall)
     if(gregariousmodel){
       namesallgreg=c(paste(newdate,"Transiens"),namesallgreg)
     }
   }
 }
+
+print(namesall)
 
 ### prepare leaflet infos
 palPres <- leaflet::colorBin(palette = viridis(5),
