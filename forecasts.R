@@ -175,14 +175,19 @@ m=addLayersControl(m,
    overlayGroups = overlayg,
    options = layersControlOptions(collapsed = FALSE)
 )
-for(j in c(1:howmanydecadesBef,(howmanydecadesBef+2):(howmanydecadesBef+1+howmanydecadesAft))){
-  m=hideGroup(m,namesall[j])
+
+# Show only forecast map for current decade
+for (name in namesall){
+  m <- hideGroup(m, name)
 }
+m <- showGroup(m, startdate)
 if(gregariousmodel){
-  for(j in c(1:howmanydecadesBef,(howmanydecadesBef+2):(howmanydecadesBef+1+howmanydecadesAft))){
-    m=hideGroup(m,namesallgreg[j])
+  for (name in namesallgreg){
+    m <- hideGroup(m, name)
   }
+  m <- showGroup(m, startdate)
 }
+
 m=addMiniMap(m,toggleDisplay = TRUE)
 m = addEasyButton(m, easyButton(icon="fa-globe", title="Reset Zoom", 
      onClick=JS("function(btn, map){ map.setView([22,5],5);}")))
