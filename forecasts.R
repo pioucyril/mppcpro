@@ -38,7 +38,7 @@ namesall = as.character(startdate)
 if(gregariousmodel){
   namesallgreg=paste(startdate,"Transiens")
 }
-if(howmanydecadesAft>1){
+if(howmanydecadesAft>=1){
   for(i in 1:howmanydecadesAft){
     day=as.numeric(day)+10
     if(day>21){
@@ -60,7 +60,7 @@ if(howmanydecadesAft>1){
 year=strc[[1]][1]
 month=strc[[1]][2]
 day=strc[[1]][3]
-if(howmanydecadesBef>1){
+if(howmanydecadesBef>=1){
   for(i in 1:howmanydecadesBef){
     day=as.numeric(day)-10
     if(day<0){
