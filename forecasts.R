@@ -9,12 +9,15 @@
 .libPaths("/home/pioucy/R/x86_64-pc-linux-gnu-library/4.1")
 
 library(htmlwidgets)
+library(leafem)
 library(leaflet)
 library(raster)
 library(terra) #to be able to save with color table
 library(lubridate)
 library(viridis)
 source("function.R") # decade.toCome()
+source("keys.R") # from leafem package - no change
+source("mousecoords.R") # from leafem package - local modifications
 
 path_clcpro="/data/Production/StaticData/CLCPRO.RData"
 path_forecast="/data/Production/Forecasts"
@@ -26,7 +29,6 @@ gregariousmodel=FALSE
 fieldData=FALSE
 
 load(path_clcpro)
-#load(paste0(path_locust,"/LOCUSTdata/clcproBase.RData"))
 
 ### Prepare the names of the files/dates to use in the interface:
 strc=strsplit(as.character(startdate),"-")
@@ -116,6 +118,7 @@ addTiles(urlTemplate=google,attribution = mbAttr,group="Google") %>%
 addTiles(urlTemplate=googleSat,attribution = mbAttr,group="Satellite") %>%
 addTiles(attribution = mbAttr,group = "OSM") %>%
 addPolygons(data=clcpro,fillColor = "#ffffff",fillOpacity=0.1,group ="CLCPRO") %>%
+addMouseCoordinates() %>%
 setView(5,22,zoom=5) %>%
 addLegend(pal = palPres, values = seq(50,100,by=10), title = "Probability (in %) to observe Locusts")
 if(gregariousmodel){
@@ -149,7 +152,6 @@ for(name in namesall){
   i = i + 1
 }
 
-
 ### Add field data
 if(fieldData){
   fb<-as.data.frame(clcproBase)
@@ -166,7 +168,7 @@ if(fieldData){
   m = addCircleMarkers(m, data=df[df$AbsSolTrans==2,], lng = ~Longitude, lat = ~Latitude, radius =5,col="red",group="realData") 
 }
 
-### Add markers and cosmetics
+# Add markers and cosmetics
 m = addMarkers(m, dfs$Long, dfs$Lat, label = dfs$Name,group="UNLAs")
 overlayg = c("CLCPRO",namesall,ifelse(gregariousmodel,c(namesall,namesallgreg),namesall),"UNLAs")
 if(fieldData){overlayg=c(overlayg,"realData")}
@@ -189,11 +191,11 @@ if(gregariousmodel){
 }
 
 m=addMiniMap(m,toggleDisplay = TRUE)
-m = addEasyButton(m, easyButton(icon="fa-globe", title="Reset Zoom", 
-     onClick=JS("function(btn, map){ map.setView([22,5],5);}")))
-m = addScaleBar(m, position = "bottomleft", options = scaleBarOptions(imperial=FALSE)) 
-   
+m = addEasyButton(m, easyButton(icon="fa-globe", title="Reset Zoom",
+     onClick=JS("function(btn, map){ map.setView([22,5],5);}"), id='toto'))
+m = addScaleBar(m, position = "bottomleft", options = scaleBarOptions(imperial=FALSE))
+
 #save leaflet into html
-saveWidget(m, file="forecast.html")  
+saveWidget(m, file="forecast.html")
 
 quit(status = 0)
