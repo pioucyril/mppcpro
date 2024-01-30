@@ -6,9 +6,6 @@
 #                  November 2023                                         # 
 ##########################################################################
 
-.libPaths("/home/elfernandez/R/x86_64-pc-linux-gnu-library/4.1")
-library(leaflet.extras2)
-
 .libPaths("/home/pioucy/R/x86_64-pc-linux-gnu-library/4.1")
 
 library(htmlwidgets)
@@ -197,21 +194,6 @@ m=addMiniMap(m,toggleDisplay = TRUE)
 m = addEasyButton(m, easyButton(icon="fa-globe", title="Reset Zoom",
      onClick=JS("function(btn, map){ map.setView([22,5],5);}"), id='toto'))
 m = addScaleBar(m, position = "bottomleft", options = scaleBarOptions(imperial=FALSE))
-m = addEasyprint(
-    m, options = easyprintOptions(
-        title = 'Save map as png',
-        position = 'topleft',
-        tileLayer = "basemap",
-        tileWait = 5000,
-        sizeModes = list("A4Landscape" = "A4Landscape"),
-        exportOnly = TRUE,
-        filename = "forecast_map",
-        hidden = FALSE,
-        hideControlContainer = FALSE,
-        hideClasses = c("leaflet-control-zoom", "leaflet-control-attribution", "leaflet-control-layers",
-        "leaflet-control-scale", "leaflet-control-minimap", "leaflet-control-easyPrint", "lnlt"),
-        customWindowTitle = NULL,
-    ))
 
 #save leaflet into html
 saveWidget(m, file="forecast.html")
