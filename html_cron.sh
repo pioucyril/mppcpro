@@ -11,42 +11,31 @@ set -x
 #
 #--------------------------------------------------------
 
-flagdir=/data/Production/Flags
-logdir=/data/Production/Logs
-scriptdir=/home/elfernandez/Production/mppcpro
+# Command line arguments (for easy launch in cron)
+yyyymmdd=$1
 
-# Guess which decade the html file creation if for,
-# depending on current day
-yyyymm=$(date +%Y%m)
-day=$(date +%d)
-if [ $day -eq 10 ]; then
-  decade="${yyyymm}11"
-elif [ $day -eq 20 ]; then
-  decade="${yyyymm}21"
-else
-  decade=$(date -d "${yyyymm}${day} + 1 day" +%Y%m%d)
-fi
+ana_env=~/miniforge3/bin/activate
+scriptdir=/home/elfernandez/Codes/mppcpro
+dirflag=/data/Production/Flags
+
+# Activate conda environment
+source $ana_env production
 
 which R
 
 # Check if html already done
-html_flag_ok=$flagdir/${decade:0:4}/${decade:4:2}/html_${decade}_OK
-[[ -e $html_flag_ok ]] && echo "$(date) - Html already created and available for ${decade}" && exit 1
+html_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/html_${yyyymmdd}_OK
+[[ -e $html_flag_ok ]] && echo "$(date) - Html already created and available for ${yyyymmdd}" && exit 1
 
 # Check that forecast has run correctly
 # Not strictly necessary as we could rely on the R code to fail if necessary input data not available
-forecast_flag_ok=$flagdir/${decade:0:4}/${decade:4:2}/forecast_${decade}_OK
+forecast_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/forecast_${yyyymmdd}_OK
 [[ ! -e $forecast_flag_ok ]] && echo "$(date) - Forecast data not available - Exit" && exit 1
 
-# Necessary for R because of relative paths allover ...
-cd $scriptdir
-
 # Launch R code
-R CMD BATCH --vanilla forecasts.R
+Rscript --vanilla ${scriptdir}/forecasts.R -d "${yyyymmdd:0:4}-${yyyymmdd:4:2}-${yyyymmdd:6:2}" -o ${scriptdir}
 [[ ! $? -eq 0 ]] && echo "$(date) - Creation of html failed - Exit" && exit 1
 
 echo "Creation of html successful"
-# Add Rout file to logs
-mv "$scriptdir/forecasts.Rout" "$logdir/html_Rout_${decade}.txt"
 touch $html_flag_ok
 

@@ -6,8 +6,6 @@
 #                  November 2023                                         # 
 ##########################################################################
 
-.libPaths("/home/pioucy/R/x86_64-pc-linux-gnu-library/4.1")
-
 library(htmlwidgets)
 library(leafem)
 library(leaflet)
@@ -16,17 +14,42 @@ library(terra) #to be able to save with color table
 library(lubridate)
 library(viridis)
 source("function.R") # decade.toCome()
+library(optparse)
 source("keys.R") # from leafem package - no change
 source("mousecoords.R") # from leafem package - local modifications
 
-path_clcpro="/data/Production/StaticData/CLCPRO.RData"
-path_forecast="/data/Production/Forecasts"
-today=Sys.Date()
-startdate=decade.toCome(today)
-howmanydecadesBef=3
-howmanydecadesAft=2
 gregariousmodel=FALSE
 fieldData=FALSE
+
+option_list = list(
+    make_option(c("-d", "--forecast_date"), type="character", default="0000-00-00",
+              help="Forecast date (format YYYY-MM-DD) [default= %default]", metavar="character"),
+    make_option(c("-f", "--forecast_dir"), type="character", default="/data/Production/Forecasts",
+              help="forecasts directory [default= %default]", metavar="character"),
+    make_option(c("-c", "--clcpro_file"), type="character", default="/data/Production/StaticData/CLCPRO.RData",
+              help="R object containing clcpro area description [default= %default]", metavar="character"),
+    make_option(c("-o", "--output_dir"), type="character", default=".",
+              help="output directory [default= %default]", metavar="character"),
+    make_option(c("-b", "--before"), type="integer", default=3,
+              help="How many decades before [default= %default]", metavar="character"),
+    make_option(c("-a", "--after"), type="integer", default=2,
+              help="How many decades after [default= %default]", metavar="character")
+)
+
+opt_parser = OptionParser(option_list=option_list);
+opt = parse_args(opt_parser);
+
+howmanydecadesBef=opt$before
+howmanydecadesAft=opt$after
+path_clcpro=opt$clcpro_file
+path_forecast=opt$forecast_dir
+startdate=opt$forecast_date
+dir.create(file.path(opt$output_dir, 'img'))
+# If no date specified, use the first date of the next decade
+if (startdate == '0000-00-00'){
+    today=Sys.Date()
+    startdate = decade.toCome(today)
+}
 
 load(path_clcpro)
 
@@ -140,14 +163,14 @@ for(name in namesall){
     r1g <- rast(paste0(path_forecast,"/Greg/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
     rtrg=round(r1g*100)*(r1>=0.5)*(r1g>=0.5)
     values(rtrg)[values(rtrg)==0]<-NA
-    writeRaster(rtrg,paste0("img/",short,"g.tif"),overwrite=T)
-    r2g <- raster(paste0("img/",short,"g.tif")) 
+    writeRaster(rtrg,paste0(opt$output_dir,"/img/",short,"g.tif"),overwrite=T)
+    r2g <- raster(paste0(opt$output_dir,"/img/",short,"g.tif"))
     m=addRasterImage(m,r2g, colors=palGreg, opacity = 0.75,group=namesallgreg[i],method='ngb')
   }
   # Add RGB colors to geotiff
   coltab(rtrans) <- c(rep(NA,50),rep(viridis(5),each=10),viridis(5)[5],rep(NA,155))
-  writeRaster(rtrans,paste0("img/",short,".tif"),overwrite=T)
-  r2 <- raster(paste0("img/",short,".tif")) 
+  writeRaster(rtrans,paste0(opt$output_dir,"/img/",short,".tif"),overwrite=T)
+  r2 <- raster(paste0(opt$output_dir,"/img/",short,".tif"))
   m=addRasterImage(m,r2, colors=palPres, opacity = 0.75,group=name,method='ngb')
   i = i + 1
 }
@@ -196,6 +219,6 @@ m = addEasyButton(m, easyButton(icon="fa-globe", title="Reset Zoom",
 m = addScaleBar(m, position = "bottomleft", options = scaleBarOptions(imperial=FALSE))
 
 #save leaflet into html
-saveWidget(m, file="forecast.html")
+saveWidget(m, file=paste0(opt$output_dir,"/forecast.html"))
 
 quit(status = 0)
