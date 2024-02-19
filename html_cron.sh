@@ -15,7 +15,7 @@
 yyyymmdd=$1
 
 ana_env=~/miniforge3/bin/activate
-scriptdir=/home/elfernandez/Codes/mppcpro
+scriptdir=/home/elfernandez/Production/mppcpro
 dirflag=/data/Production/Flags
 
 # Activate conda environment
