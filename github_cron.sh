@@ -7,34 +7,25 @@ set -x
 #      - forecast.html
 #      - forecast maps as tif
 #
-#   Will be launched on last day of previous decade
+#   Will be launched on last day of previous yyyymmdd
 #   ie on a 10, 20 or last day of a month
 #   Only valid in that case !
 #
 #--------------------------------------------------------
 
-flagdir=/data/Production/Flags
-logdir=/data/Production/Logs
-scriptdir=/home/elfernandez/Production/mppcpro
+# Command line arguments (for easy launch in cron)
+yyyymmdd=$1
 
-# Guess which decade the push is for,
-# depending on current day
-yyyymm=$(date +%Y%m)
-day=$(date +%d)
-if [ $day -eq 10 ]; then
-  decade="${yyyymm}11"
-elif [ $day -eq 20 ]; then
-  decade="${yyyymm}21"
-else
-  decade=$(date -d "${yyyymm}${day} + 1 day" +%Y%m%d)
-fi
+ana_env=~/miniforge3/bin/activate
+scriptdir=/home/elfernandez/Codes/mppcpro
+dirflag=/data/Production/Flags
 
 # Check if push already done
-git_flag_ok=$flagdir/${decade:0:4}/${decade:4:2}/git_${decade}_OK
-[[ -e $git_flag_ok ]] && echo "$(date) - Git push already done for decade ${decade}" && exit 1
+git_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/git_${yyyymmdd}_OK
+[[ -e $git_flag_ok ]] && echo "$(date) - Git push already done for yyyymmdd ${yyyymmdd}" && exit 1
 
 # Check that html creation has run properly
-html_flag_ok=$flagdir/${decade:0:4}/${decade:4:2}/html_${decade}_OK
+html_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/html_${yyyymmdd}_OK
 [[ ! -e $html_flag_ok ]] && echo "$(date) - Html file not available yet - Exit" && exit 1
 
 # Git workflow
@@ -51,7 +42,7 @@ for image in $list_images; do
 done
 
 # Commit and push
-git commit -m "Update forecast and images for decade ${decade}" || exit 1
+git commit -m "Update forecast and images for yyyymmdd ${yyyymmdd}" || exit 1
 git push || exit 1
 
 touch $git_flag_ok
