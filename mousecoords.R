@@ -341,3 +341,34 @@ mouseCoordsDependenciesMD = function() {
 #   )
 #   map
 # }
+
+addMouseCoordinatesTRY <- function(map,
+                                  epsg = NULL,
+                                  proj4string = NULL,
+                                  native.crs = FALSE) {
+                                  
+   map <- htmlwidgets::onRender(
+    map,
+    paste0(
+      "
+      function(el, x, data) {
+      // get the leaflet map
+      var map = this; //HTMLWidgets.find('#' + el.id);
+      
+      map.on('click', function (e) {
+        var lat =  e.latlng.lat  ;
+        var lng =  e.latlng.lng  ;
+        var latD = Math.floor(lat) ;
+        var lngD = Math.floor(lng);
+        var latM = Math.floor((lat - latD) * 60);
+        var lngM = Math.floor((lng - lngD) * 60);
+        var latS = Math.floor((lat - latD - latM / 60) * 3600);
+        var lngS = Math.floor((lng - lngD - lngM / 60) * 3600);
+        alert('Lat : ' + lat + ', Lon : ' + lng + ', LatDMS : ' + latD + '°' + latM +' '+latS+' ')
+      });
+      }
+      "
+    )
+  )                                                             
+map                                  
+}
