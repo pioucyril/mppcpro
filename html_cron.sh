@@ -33,6 +33,8 @@ forecast_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/forecast_${yyyymmdd}_O
 [[ ! -e $forecast_flag_ok ]] && echo "$(date) - Forecast data not available - Exit" && exit 1
 
 # Launch R code
+# need to add for now because of subfunction in R in other file
+cd ${scriptdir}
 Rscript --vanilla ${scriptdir}/forecasts.R -d "${yyyymmdd:0:4}-${yyyymmdd:4:2}-${yyyymmdd:6:2}" -o ${scriptdir}
 [[ ! $? -eq 0 ]] && echo "$(date) - Creation of html failed - Exit" && exit 1
 

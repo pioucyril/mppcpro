@@ -17,7 +17,7 @@ set -x
 yyyymmdd=$1
 
 ana_env=~/miniforge3/bin/activate
-scriptdir=/home/elfernandez/Codes/mppcpro
+scriptdir=/home/elfernandez/Production/mppcpro
 dirflag=/data/Production/Flags
 
 # Check if push already done
@@ -42,7 +42,7 @@ for image in $list_images; do
 done
 
 # Commit and push
-git commit -m "Update forecast and images for yyyymmdd ${yyyymmdd}" || exit 1
+git commit -m "Update forecast and images for ${yyyymmdd}" || exit 1
 git push || exit 1
 
 touch $git_flag_ok
