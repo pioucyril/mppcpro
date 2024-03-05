@@ -141,7 +141,10 @@ addTiles(urlTemplate=google,attribution = mbAttr,group="Google") %>%
 addTiles(urlTemplate=googleSat,attribution = mbAttr,group="Satellite") %>%
 addTiles(attribution = mbAttr,group = "OSM") %>%
 addPolygons(data=clcpro,fillColor = "#ffffff",fillOpacity=0.1,group ="CLCPRO") %>%
+# To show mouse coordinates on top of screen
 addMouseCoordinates() %>%
+# To show mouse coordinates on a pop-up when one clicks on map
+addMouseCoordinatesPopUp() %>%
 setView(5,22,zoom=5) %>%
 addLegend(pal = palPres, values = seq(50,100,by=10), title = "Probability (in %) to observe Locusts")
 if(gregariousmodel){

@@ -127,13 +127,22 @@ addMouseCoordinates <- function(map,
       // grab the special div we generated in the beginning
       // and put the mousmove output there
 
+
       map.on('mousemove', function (e) {
+      var lat =  e.latlng.lat  ;
+      var lng =  e.latlng.lng  ;
+      var latD = Math.floor(lat) ;
+      var lngD = Math.floor(lng);
+      var latM = Math.floor((lat - latD) * 60);
+      var lngM = Math.floor((lng - lngD) * 60);
+      var latS = Math.floor((lat - latD - latM / 60) * 3600);
+      var lngS = Math.floor((lng - lngD - lngM / 60) * 3600);
       if (e.originalEvent.ctrlKey) {
       if (document.querySelector('.lnlt') === null) lnlt = addElement();
       lnlt.text(", txt_detailed, ");
       } else {
       if (document.querySelector('.lnlt') === null) lnlt = addElement();
-      lnlt.text(", txt_basic, ");
+      lnlt.text('Latitude : ' + latD + '\u00b0' + latM + '\u2032' + latS + '\u2033 - Longitude : ' + lngD + '\u00b0' + lngM + '\u2032' + lngS + '\u2033');
       }
       });
 
@@ -342,7 +351,7 @@ mouseCoordsDependenciesMD = function() {
 #   map
 # }
 
-addMouseCoordinatesTRY <- function(map,
+addMouseCoordinatesPopUp <- function(map,
                                   epsg = NULL,
                                   proj4string = NULL,
                                   native.crs = FALSE) {
@@ -364,7 +373,7 @@ addMouseCoordinatesTRY <- function(map,
         var lngM = Math.floor((lng - lngD) * 60);
         var latS = Math.floor((lat - latD - latM / 60) * 3600);
         var lngS = Math.floor((lng - lngD - lngM / 60) * 3600);
-        alert('Lat : ' + lat + ', Lon : ' + lng + ', LatDMS : ' + latD + '°' + latM +' '+latS+' ')
+        alert('Latitude : ' + latD + '\u00b0' + latM + '\u2032' + latS + '\u2033 - Longitude : ' + lngD + '\u00b0' + lngM + '\u2032' + lngS + '\u2033')
       });
       }
       "
@@ -372,3 +381,4 @@ addMouseCoordinatesTRY <- function(map,
   )                                                             
 map                                  
 }
+
