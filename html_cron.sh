@@ -37,6 +37,7 @@ forecast_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/forecast_${yyyymmdd}_O
 cd ${scriptdir}
 Rscript --vanilla ${scriptdir}/forecasts.R -d "${yyyymmdd:0:4}-${yyyymmdd:4:2}-${yyyymmdd:6:2}" -o ${scriptdir}
 [[ ! $? -eq 0 ]] && echo "$(date) - Creation of html failed - Exit" && exit 1
+cp ${scriptdir}/forecast.html ${scriptdir}/forecasts/forecast_${yyyymmdd}.html
 
 echo "Creation of html successful"
 touch $html_flag_ok
