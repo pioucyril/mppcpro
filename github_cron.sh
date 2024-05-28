@@ -34,8 +34,11 @@ cd $scriptdir
 # Repo must be up-to-date to be able to push later on
 git pull || exit 1
 
-# Add html and images that have been created in the last 24 hours
+# Add html page for current decade
 git add forecast.html || exit 1
+# Add current html page to archive
+git add forecasts/*.html || exit 1
+# Add images that have been created in the last 24 hours
 list_images=$(find img -type f -mtime -1 -name '*.tif')
 for image in $list_images; do
   git add $image || exit 1

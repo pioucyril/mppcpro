@@ -9,6 +9,8 @@
 library(htmlwidgets)
 library(leafem)
 library(leaflet)
+library(leaflet.extras)
+library(htmltools)
 library(raster)
 library(terra) #to be able to save with color table
 library(lubridate)
@@ -136,6 +138,18 @@ Tunisie, 36.828611, 10.184444
 DPV Senegal, 14.747378807885443, -17.355923729602747"))
 
 ### Start creating leaflet
+# Define HTML for the infobox
+info.box <- HTML(paste0(
+  HTML(
+    '<div class="modal fade" id="infobox" role="dialog"><div class="modal-dialog"><!-- Modal content--><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button>'
+  ),
+  # Body
+  HTML('<h4>Html pages for previous dates are available <a href="https://github.com/pioucyril/mppcpro/tree/main/forecasts">here</a></h4>
+        <h4>Geotiff images are available <a href="https://github.com/pioucyril/mppcpro/tree/main/img">here</a></h4>'),
+  # Closing divs
+  HTML('</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div>')
+))
+
 m=leaflet() %>% #
 addTiles(urlTemplate=google,attribution = mbAttr,group="Google") %>%
 addTiles(urlTemplate=googleSat,attribution = mbAttr,group="Satellite") %>%
@@ -146,7 +160,11 @@ addMouseCoordinates() %>%
 # To show mouse coordinates on a pop-up when one clicks on map
 addMouseCoordinatesPopUp() %>%
 setView(5,22,zoom=5) %>%
-addLegend(pal = palPres, values = seq(50,100,by=10), title = "Probability (in %) to observe Locusts")
+addLegend(pal = palPres, values = seq(50,100,by=10), title = "Probability (in %) to observe Locusts") %>%
+# To add button with links to archived html and tif images
+addBootstrapDependency() %>%
+addEasyButton(easyButton(icon="fa-info-circle", title="Archived data", onClick = JS("function(btn, map){ $('#infobox').modal('show'); }"))) %>%
+htmlwidgets::appendContent(info.box)
 if(gregariousmodel){
   m = addLegend(m, pal = palGreg, values = seq(50,100,by=10), title = "Probability (in %) to observe Transiens")
 }
