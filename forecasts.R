@@ -175,13 +175,13 @@ modV = 1
 for(name in namesall){
   short=paste0(strsplit(name,"-")[[1]],collapse="")
   modV=ifelse(i<=howmanydecadesBef+1,modV,modV + 1)
-  r1 <- rast(paste0(path_forecast,"/PresAbs/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
+  r1 <- rast(paste0(path_forecast,"/PresAbs/",short,"_F",modV,"/rpred_",short,"_F",modV,".tif"))
   rtrans=round(r1*100)
   rtrans=rtrans*(r1>=0.5)
   values(rtrans)[values(rtrans)==0]<-NA
   
   if(gregariousmodel){
-    r1g <- rast(paste0(path_forecast,"/Greg/",short,"_F",modV,"/Ensemble/meanpred_",short,"_F",modV,".tif"))
+    r1g <- rast(paste0(path_forecast,"/Greg/",short,"_F",modV,"/rpred_",short,"_F",modV,".tif"))
     rtrg=round(r1g*100)*(r1>=0.5)*(r1g>=0.5)
     values(rtrg)[values(rtrg)==0]<-NA
     writeRaster(rtrg,paste0(opt$output_dir,"/img/",short,"g.tif"),overwrite=T)

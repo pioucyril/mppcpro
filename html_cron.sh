@@ -14,9 +14,11 @@
 # Command line arguments (for easy launch in cron)
 yyyymmdd=$1
 
-ana_env=~/miniforge3/bin/activate
+ana_env=~/software/miniforge3/bin/activate
 scriptdir=/home/elfernandez/Production/mppcpro
+fcstdir=/data/Production/MODIS_MODIS11
 dirflag=/data/Production/Flags
+roi=/data/Production/StaticData/CLCPRO.RData
 
 # Activate conda environment
 source $ana_env production
@@ -35,7 +37,7 @@ forecast_flag_ok=$dirflag/${yyyymmdd:0:4}/${yyyymmdd:4:2}/forecast_${yyyymmdd}_O
 # Launch R code
 # need to add for now because of subfunction in R in other file
 cd ${scriptdir}
-Rscript --vanilla ${scriptdir}/forecasts.R -d "${yyyymmdd:0:4}-${yyyymmdd:4:2}-${yyyymmdd:6:2}" -o ${scriptdir}
+Rscript --vanilla ${scriptdir}/forecasts.R -d "${yyyymmdd:0:4}-${yyyymmdd:4:2}-${yyyymmdd:6:2}" -o ${scriptdir} -f ${fcstdir} -c ${roi}
 [[ ! $? -eq 0 ]] && echo "$(date) - Creation of html failed - Exit" && exit 1
 cp ${scriptdir}/forecast.html ${scriptdir}/forecasts/forecast_${yyyymmdd}.html
 
