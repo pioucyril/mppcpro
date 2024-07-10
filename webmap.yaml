@@ -165,6 +165,7 @@ dependencies:
   - r-lazyeval=0.2.2=r42h57805ef_4
   - r-leafem=0.2.3=r42h785f33e_0
   - r-leaflet=2.2.2=r42hc72bb7e_0
+  - r-leaflet.extras=2.0.0=r42hc72bb7e_0
   - r-leaflet.providers=2.0.0=r42hc72bb7e_0
   - r-lifecycle=1.0.4=r42hc72bb7e_0
   - r-lubridate=1.9.3=r42h57805ef_0
@@ -201,6 +202,8 @@ dependencies:
   - r-sourcetools=0.1.7_1=r42ha503ecb_1
   - r-sp=2.1_4=r42hb1dbf0f_0
   - r-spatialwidget=0.2.5=r42ha503ecb_0
+  - r-stringi=1.7.12=r42h1ae9187_0
+  - r-stringr=1.5.1=r42h785f33e_0
   - r-terra=1.7_29=r42hed29ff2_0
   - r-tibble=3.2.1=r42h57805ef_2
   - r-timechange=0.3.0=r42ha503ecb_0

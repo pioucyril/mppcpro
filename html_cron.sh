@@ -45,7 +45,7 @@ dirflag=/data/Production/Flags
 roi=/data/Production/StaticData/CLCPRO.RData
 
 # Activate conda environment
-source $ana_env production
+source $ana_env webmap
 
 which R
 
