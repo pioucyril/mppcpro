@@ -40,7 +40,7 @@ yyyymmdd=$1
 
 ana_env=~/software/miniforge3/bin/activate
 scriptdir=/home/elfernandez/Production/mppcpro
-fcstdir=/data/Production/MODIS_MODIS11
+fcstdir=/data/Production/Forecasts/MODIS_MODIS11
 dirflag=/data/Production/Flags
 roi=/data/Production/StaticData/CLCPRO.RData
 
